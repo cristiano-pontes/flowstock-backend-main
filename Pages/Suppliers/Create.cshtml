@@ -1,0 +1,25 @@
+@page
+@model FlowStock_Backend.Pages.Suppliers.CreateModel
+
+<h2>Create Supplier</h2>
+
+<form method="post">
+
+    <div>
+        <label>Name</label>
+        <input asp-for="Supplier.Name" />
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input asp-for="Supplier.Email" />
+    </div>
+
+    <div>
+        <label>Phone</label>
+        <input asp-for="Supplier.Phone" />
+    </div>
+
+    <button type="submit">Save</button>
+
+</form>

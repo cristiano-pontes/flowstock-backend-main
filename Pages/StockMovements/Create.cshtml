@@ -1,0 +1,37 @@
+@page
+@model FlowStock_Backend.Pages.StockMovements.CreateModel
+
+<h2>Register Stock Movement</h2>
+
+<form method="post">
+    <div>
+        <label>Product</label>
+        <select asp-for="StockMovement.ProductId">
+            @foreach (var p in Model.Products)
+            {
+                <option value="@p.Id">@p.Name</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label>Quantity</label>
+        <input asp-for="StockMovement.Quantity" />
+    </div>
+
+    <div>
+        <label>Type</label>
+        <select asp-for="StockMovement.Type">
+            <option value="IN">IN</option>
+            <option value="OUT">OUT</option>
+            <option value="LOSS">LOSS</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Reason</label>
+        <input asp-for="StockMovement.Reason" />
+    </div>
+
+    <button type="submit">Save Movement</button>
+</form>

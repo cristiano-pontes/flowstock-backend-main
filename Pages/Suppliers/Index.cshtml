@@ -1,0 +1,25 @@
+@page
+@model FlowStock_Backend.Pages.Suppliers.IndexModel
+
+<h2>Suppliers</h2>
+
+<table border="1">
+
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+    </tr>
+
+    @foreach (var item in Model.Suppliers)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Email</td>
+            <td>@item.Phone</td>
+        </tr>
+    }
+
+</table>
+
+<a href="/Suppliers/Create">Add New Supplier</a>

@@ -1,0 +1,31 @@
+@page
+@model FlowStock_Backend.Pages.Products.IndexModel
+
+<h2>Products</h2>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Barcode</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Minimum Stock</th>
+        <th>Supplier</th>
+    </tr>
+
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Barcode</td>
+            <td>@item.Description</td>
+            <td>@item.Price</td>
+            <td>@item.Quantity</td>
+            <td>@item.MinimumStock</td>
+            <td>@(item.Supplier != null ? item.Supplier.Name : "Not informed")</td>
+        </tr>
+    }
+</table>
+
+<a href="/Products/Create">Add New Product</a>
