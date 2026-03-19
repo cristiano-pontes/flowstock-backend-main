@@ -40,21 +40,39 @@ namespace FlowStock_Backend.Pages.StockMovements
             }
             else if (StockMovement.Type == "OUT" || StockMovement.Type == "LOSS")
             {
-                product.Quantity -= StockMovement.Quantity;
+                if (product.Quantity >= StockMovement.Quantity)
+                {
+                    product.Quantity -= StockMovement.Quantity;
+                }
+                else
+                {
+                    Products = _context.Products.ToList();
+                    return Page();
+                }
             }
 
             _context.StockMovements.Add(StockMovement);
 
             if (product.Quantity <= product.MinimumStock)
             {
-                var alert = new Alert
-                {
-                    ProductId = product.Id,
-                    Type = "LowStock",
-                    Message = $"Product {product.Name} is at low stock."
-                };
+                bool alertAlreadyExists = _context.Alerts.Any(a =>
+                    a.ProductId == product.Id &&
+                    a.Type == "LowStock" &&
+                    a.IsRead == false);
 
-                _context.Alerts.Add(alert);
+                if (!alertAlreadyExists)
+                {
+                    var alert = new Alert
+                    {
+                        ProductId = product.Id,
+                        Type = "LowStock",
+                        Message = $"O produto {product.Name} está com estoque baixo. Quantidade atual: {product.Quantity}.",
+                        Date = DateTime.Now,
+                        IsRead = false
+                    };
+
+                    _context.Alerts.Add(alert);
+                }
             }
 
             _context.SaveChanges();

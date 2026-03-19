@@ -1,0 +1,32 @@
+@page
+@model FlowStock_Backend.Pages.Alerts.IndexModel
+
+<h2>Lista de Alertas</h2>
+
+@if (Model.Alerts.Count == 0)
+{
+<p>Nenhum alerta encontrado.</p>
+}
+else
+{
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Tipo</th>
+        <th>Mensagem</th>
+        <th>Data</th>
+        <th>Produto</th>
+        <th>Status</th>
+    </tr>
+
+    @foreach (var alert in Model.Alerts)
+        {
+    <tr style="background-color:@(alert.IsRead ? "#ffffff" : "#ffcccc")">
+        <td>@alert.Type</td>
+        <td>@alert.Message</td>
+        <td>@alert.Date.ToString("dd/MM/yyyy HH:mm")</td>
+        <td>@alert.Product?.Name</td>
+        <td>@(alert.IsRead ? "Lido" : "Não lido")</td>
+    </tr>
+        }
+</table>
+}

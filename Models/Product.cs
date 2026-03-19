@@ -20,11 +20,11 @@ namespace FlowStock_Backend.Models
 
         public Supplier? Supplier { get; set; }
 
-        public List<Lot> Lots { get; set; } = new();
+        public List<Lot> Lots { get; set; } = new List<Lot>();
 
-        public List<StockMovement> StockMovements { get; set; } = new();
+        public List<StockMovement> StockMovements { get; set; } = new List<StockMovement>();
 
-        public List<Alert> Alerts { get; set; } = new();
+        public List<Alert> Alerts { get; set; } = new List<Alert>();
     }
 }
 

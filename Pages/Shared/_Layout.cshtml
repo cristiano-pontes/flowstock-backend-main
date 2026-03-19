@@ -1,16 +1,81 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using FlowStock_Backend.Data
+@using FlowStock_Backend.Models
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext _context
+
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FlowStock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .alert-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 350px;
+            background-color: #ff4d4d;
+            color: white;
+            border: 2px solid #b30000;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+            z-index: 9999;
+        }
+
+            .alert-popup h3 {
+                margin-top: 0;
+            }
+
+            .alert-popup a {
+                color: yellow;
+                font-weight: bold;
+            }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
+    @{
+        var unreadAlerts = _context.Alerts
+            .Include(a => a.Product)
+            .Where(a => !a.IsRead)
+            .OrderByDescending(a => a.Date)
+            .ToList();
+    }
+
+    @if (unreadAlerts.Any())
+    {
+    <div class="alert-popup" id="alertPopup">
+        <span class="close-btn" onclick="document.getElementById('alertPopup').style.display='none'">X</span>
+        <h3>Alerta de Estoque</h3>
+
+        @foreach (var alert in unreadAlerts.Take(3))
+            {
+        <p>@alert.Message</p>
+            }
+
+        <a href="/Alerts/Index">Ver todos os alertas</a>
+    </div>
+    }
+
     <header>
         <nav>
             <a href="/">Home</a> |
-            <a href="/Products/Index">Products</a> |
-            <a href="/StockMovements/Create">Stock Movements</a>
+            <a href="/Products/Index">Produtos</a> |
+            <a href="/Products/Create">Cadastrar Produto</a> |
+            <a href="/StockMovements/Create">Movimentar Estoque</a> |
+            <a href="/Alerts/Index">Alertas</a>
         </nav>
         <hr />
     </header>
@@ -19,4 +84,4 @@
         @RenderBody()
     </main>
 </body>
-</html></html>
+</html>
